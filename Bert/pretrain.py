@@ -41,7 +41,7 @@ if __name__ == '__main__':
     # model = BertModel(num_layers=args.num_layers, d_model=args.d_model, dff=args.dff, num_heads=args.num_heads, vocab_size=args.vocab_size)
     # mask_model = MaskLM(args.vocab_size, args.dff, num_inputs=args.d_model, max_length=max_length)
 
-    device = torch.device("cpu")
+    device = torch.device("cuda")
     model.to(device)
     # mask_model.to(device)
 
@@ -124,9 +124,11 @@ if __name__ == '__main__':
             char_weight = batch['weight']
 
             # optimizer.zero_grad()
-            mask = torch.eq(x, 1).to(torch.float32)
-            mask = mask.unsqueeze(1).unsqueeze(2)
-            outputs = model(x, None, mask, training=True)
+            valid_lens = batch['valid_lens']
+            outputs = model(x, None, valid_lens)
+            # mask = torch.eq(x, 1).to(torch.float32)
+            # mask = mask.unsqueeze(1).unsqueeze(2)
+            # outputs = model(x, None, mask, training=True)
             outputs_label = torch.max(outputs, dim=-1)
             w = torch.nonzero(char_weight).to(device)
 
