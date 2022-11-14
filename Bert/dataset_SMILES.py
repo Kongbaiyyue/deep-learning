@@ -24,7 +24,7 @@ class SmilesDataset(Dataset):
         # self.src_path = opt.data
         self.src_path = src_path
 
-        self.vocab = self.load('Bert/data/USPTO-50k_no_rxn/USPTO-50k_no_rxn.vocab.txt')
+        self.vocab = self.load('data/USPTO-50k_no_rxn/USPTO-50k_no_rxn.vocab.txt')
         self.vocab['<mask>'] = len(self.vocab)
         self.get_data()
 
@@ -112,9 +112,9 @@ class SmilesCollator(object):
             #     weight.append(data['weight'])
             #     y.append(data['y'])
                 # data_batch[i] = data
-        x = torch.tensor(x, dtype=torch.int32).to(device)
+        x = torch.tensor(x, dtype=torch.int64).to(device)
         weight = torch.tensor(weight, dtype=torch.int32).to(device)
-        y = torch.tensor(y, dtype=torch.int32).to(device)
+        y = torch.tensor(y, dtype=torch.int64).to(device)
         valid_lens = torch.tensor(valid_lens, dtype=torch.int32, device=device)
 
         input_batch = {}

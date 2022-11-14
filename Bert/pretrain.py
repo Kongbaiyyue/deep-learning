@@ -16,8 +16,8 @@ def train_step(x, y, char_weight):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Get saved data/model path")
-    parser.add_argument('--train_src', '-train_src', type=str, default='Bert/data/USPTO-50k_no_rxn/train-bert.txt')
-    parser.add_argument('--test_src', '-test_src', type=str, default='Bert/data/USPTO-50k_no_rxn/src-test.txt')
+    parser.add_argument('--train_src', '-train_src', type=str, default='data/USPTO-50k_no_rxn/train-bert.txt')
+    parser.add_argument('--test_src', '-test_src', type=str, default='data/USPTO-50k_no_rxn/src-test.txt')
     parser.add_argument('--num_layers', '-num_layers', type=int, default=6)
     parser.add_argument('--d_model', '-d_model', type=int, default=256)
     parser.add_argument('--dff', '-dff', type=int, default=512)
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 88, 256, 512, 4
     norm_shape, ffn_num_input, num_layers, dropout = [256], 256, 3, 0.2
-    model = BERTEncoder(vocab_size, num_hiddens, norm_shape, ffn_num_input, ffn_num_hiddens, num_heads, num_layers, dropout, max_len=256)
+    model = BERTEncoder(vocab_size, num_hiddens, norm_shape, ffn_num_input, ffn_num_hiddens, num_heads, num_layers, dropout, max_len=256, key_size=256, query_size=256, value_size=256)
     # model = BertModel(num_layers=args.num_layers, d_model=args.d_model, dff=args.dff, num_heads=args.num_heads, vocab_size=args.vocab_size)
     # mask_model = MaskLM(args.vocab_size, args.dff, num_inputs=args.d_model, max_length=max_length)
 

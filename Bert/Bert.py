@@ -20,6 +20,7 @@ class BERTEncoder(nn.Module):
         # 在BERT中，位置嵌入是可学习的，因此我们创建一个足够长的位置嵌入参数
         self.pos_embedding = nn.Parameter(torch.randn(1, max_len,
                                                       num_hiddens))
+        self.last = nn.Linear(num_hiddens, vocab_size)
 
     def forward(self, tokens, segments, valid_lens):
         # 在以下代码段中，X的形状保持不变：（批量大小，最大序列长度，num_hiddens）
@@ -28,5 +29,6 @@ class BERTEncoder(nn.Module):
         X = X + self.pos_embedding.data
         for blk in self.blks:
             X = blk(X, valid_lens)
+        X = self.last(X)
         return X
 
