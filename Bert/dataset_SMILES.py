@@ -88,7 +88,11 @@ class SmilesCollator(object):
 
     def add_pad(self, data):
         data_len = len(data['x'])
-        data_copy = data.copy()
+        data_copy = dict()
+        data_copy['x'] = data['x'].copy()
+        data_copy['weight'] = data['weight'].copy()
+        data_copy['y'] = data['y'].copy()
+
         for i in range(self.max_length - data_len):
             data_copy['x'].append(1)
             data_copy['weight'].append(0)
