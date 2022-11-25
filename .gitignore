@@ -1,0 +1,14 @@
+experiments/
+runs/*
+*.pt
+train_*.log
+Bert/data/
+Bert/__pycache__/
+*.pyc
+*.log
+*.err
+*.xml
+.idea/
+model/
+*.iml
+*.txt
