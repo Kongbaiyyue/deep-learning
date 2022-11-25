@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from tqdm.auto import tqdm
 
-device = 'cpu'
+device = 'cuda'
 
 
 class SmilesDataset(Dataset):
@@ -50,6 +50,8 @@ class SmilesDataset(Dataset):
         for smile in smiles:
             data = {}
             tokens = self.get_tokens(smile)
+            tokens.insert(0, '<s>')
+            tokens.append('</s>')
             nums_list = [self.vocab.get(i, self.vocab['<unk>']) for i in tokens]
             choices = np.random.permutation(len(nums_list)-1)[:max(int(len(nums_list)*0.15), 1)] + 1
             y = nums_list.copy()
