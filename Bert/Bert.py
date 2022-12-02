@@ -4,9 +4,9 @@ from d2l import torch as d2l
 
 
 class BertEmbedding(nn.Module):
-    def __init__(self, vocab_size, num_hiddens, max_len,
+    def __init__(self, vocab_size, num_hiddens, max_len=1000,
                  **kwargs):
-        super(BERTEncoder, self).__init__(**kwargs)
+        super(BertEmbedding, self).__init__()
         self.token_embedding = nn.Embedding(vocab_size, num_hiddens)
         self.pos_embedding = nn.Parameter(torch.randn(1, max_len,
                                                       num_hiddens))
@@ -56,3 +56,16 @@ class LastLine(nn.Module):
     def forward(self, X):
         return self.last(X)
 
+
+class BertModel(nn.Module):
+    def __init__(self, emb, bert, cls):
+        super(BertModel, self).__init__()
+        self.emb = emb
+        self.bert = bert
+        self.cls = cls
+
+    def forward(self, X, segments, valid_lens):
+        x = self.emb(X)
+        outputs = self.bert(x, None, valid_lens)
+        outputs = self.cls(outputs)
+        return outputs

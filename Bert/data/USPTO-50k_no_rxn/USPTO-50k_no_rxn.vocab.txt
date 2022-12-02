@@ -1,7 +1,7 @@
-<unk>	0
-<blank>	1
-<s>	2
-</s>	3
+<blank>	0
+<s>	1
+</s>	2
+<unk>	3
 c	4
 C	5
 (	6

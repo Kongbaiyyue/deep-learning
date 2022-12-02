@@ -62,7 +62,10 @@ class SmilesDataset(Dataset):
                 if rand < 0.8:
                     nums_list[i] = self.vocab['<mask>']
                 elif rand < 0.9:
-                    nums_list[i] = int(np.random.rand() * 14 + 1)
+                    r_num = int(np.random.rand() * (len(self.vocab)-4)) + 3
+                    while nums_list[i] == r_num:
+                            r_num = int(np.random.rand() * (len(self.vocab)-4)) + 3
+                    nums_list[i] = r_num
             weight = weight.tolist()
             x = nums_list
             data['x'] = x

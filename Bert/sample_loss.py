@@ -9,7 +9,7 @@ class SampleLoss(nn.Module):
     def forward(self, input, target, sample_weight=None):
         if sample_weight is not None:
             loss = nn.CrossEntropyLoss(reduction='none')(input, target)
-            loss = torch.mul(loss, sample_weight).mean()
+            loss = torch.mul(loss, sample_weight).sum()
         else:
             loss = nn.CrossEntropyLoss(reduction="mean")(input, target)
         return loss
