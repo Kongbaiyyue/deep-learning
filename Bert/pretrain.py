@@ -60,7 +60,7 @@ if __name__ == '__main__':
     cls = LastLine(num_hiddens, vocab_size)
     model = BertModel(emb, model_bert, cls)
 
-    checkpoint = torch.load('Bert_smiles_USPTO_50k_rand.pt')
+    checkpoint = torch.load('models/Bert_smiles_USPTO_50k_rand_split_150_step.pt')
     if checkpoint is not None:
         # This preserves backward-compat for models using customed layernorm
         def fix_key(s):
@@ -199,7 +199,7 @@ if __name__ == '__main__':
         print(prec / float(all_test))
         if epoch % 5 == 0:
             print(epoch)
-            torch.save(model.state_dict(), 'models/Bert_smiles_USPTO_50k_rand_split_%d_step.pt' % epoch)
+            torch.save(model.state_dict(), 'models/Bert_smiles_USPTO_50k_rand_split_%d_step.pt' % (70+epoch))
 
     all_test = 0
     prec = 0

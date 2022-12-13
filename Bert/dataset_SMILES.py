@@ -26,6 +26,7 @@ class SmilesDataset(Dataset):
 
         self.vocab = self.load('data/USPTO-50k_no_rxn/USPTO-50k_no_rxn.vocab.txt')
         self.vocab['<mask>'] = len(self.vocab)
+        self.vocab['<global>'] = len(self.vocab)
         self.get_data()
 
     def get_smiles(self):
@@ -51,6 +52,7 @@ class SmilesDataset(Dataset):
             data = {}
             tokens = self.get_tokens(smile)
             tokens.insert(0, '<s>')
+            tokens.insert(0, '<global>')
             tokens.append('</s>')
             nums_list = [self.vocab.get(i, self.vocab['<unk>']) for i in tokens]
             choices = np.random.permutation(len(nums_list)-1)[:max(int(len(nums_list)*0.15), 1)] + 1
